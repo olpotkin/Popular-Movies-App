@@ -15,11 +15,10 @@ public final class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static final String MOVIE_URL = "http://api.themoviedb.org/3/movie";
+    private static final String API_KEY_PARAM = "api_key";
 
     // API key to access http://api.themoviedb.org/
     private static final String API_KEY = "PASTE_YOUR_API_KEY_HERE";
-
-    final static String API_KEY_PARAM = "api_key";
 
     public static URL buildUrl(String categoryQuery) {
         Uri builtUri = Uri.parse(MOVIE_URL).buildUpon()
