@@ -1,4 +1,4 @@
-package com.apps.olpotkin.popularmovies;
+package com.apps.olpotkin.popularmovies.utilities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
