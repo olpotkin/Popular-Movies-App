@@ -1,5 +1,6 @@
 package com.apps.olpotkin.popularmovies;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +9,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.apps.olpotkin.popularmovies.model.Movie;
+import com.apps.olpotkin.popularmovies.utilities.ImageAdapter;
 import com.apps.olpotkin.popularmovies.utilities.JsonUtils;
 import com.apps.olpotkin.popularmovies.utilities.NetworkUtils;
 
@@ -19,7 +23,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-    String active_category = "popular";                 // Default Active category
+    String active_category = "popular";                     // Default Active category
+    String POSTER_W185_PATH = "http://image.tmdb.org/t/p/w185/";
 
     // Store parsed data
     Movie[] movie_db;
@@ -68,12 +73,35 @@ public class MainActivity extends AppCompatActivity {
         // Get paths to images
         String[] imgUrls = new String[movie_db.length];
         for (int i = 0; i < imgUrls.length; i++){
-            imgUrls[i] = movie_db[i].getPosterPath();
+            imgUrls[i] = POSTER_W185_PATH + movie_db[i].getPosterPath();
         }
         GridView gridview = (GridView) findViewById(R.id.main_grid);
         gridview.setAdapter(new ImageAdapter(this, imgUrls));
-    }
 
+        // Setup item click listener
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    // Get details about choosen movie
+                    Movie selected_movie = movie_db[position];
+
+                    // Invoke movie details activity with Intent
+                    Intent intent = new Intent(getApplicationContext(), MovieDetailsActivity.class);
+                    intent.putExtra("poster_path", selected_movie.getPosterPath());
+                    intent.putExtra("title", selected_movie.getTitle());
+                    intent.putExtra("overview", selected_movie.getOverview());
+                    intent.putExtra("release_date", selected_movie.getReleaseDate());
+                    intent.putExtra("vote_avg", selected_movie.getVoteAverage());
+
+                    startActivity(intent);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
     public class FetchMovieTask extends AsyncTask<String, Void, Movie[]> {
 
