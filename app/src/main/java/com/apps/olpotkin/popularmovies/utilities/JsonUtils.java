@@ -17,8 +17,6 @@ public final class JsonUtils {
         final String RELEASE_DATE = "release_date";
         final String VOTE_AVERAGE = "vote_average";
 
-        final String POSTER_ROOT_PATH = "http://image.tmdb.org/t/p/w185/";
-
         Movie[] movieData = null;
 
         JSONObject movieJson = new JSONObject(movieJsonStr);
@@ -31,7 +29,7 @@ public final class JsonUtils {
 
             String title = movie_sample.getString(TITLE);
             String overview = movie_sample.getString(OVERVIEW);
-            String poster_full_path = POSTER_ROOT_PATH + movie_sample.getString(POSTER_PATH);
+            String poster_full_path = movie_sample.getString(POSTER_PATH);
             String release_date = movie_sample.getString(RELEASE_DATE);
             String vote_average = movie_sample.getString(VOTE_AVERAGE);
 
