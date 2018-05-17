@@ -1,4 +1,4 @@
-# Popular Movies Project
+# Popular Movies
 
 [image1]: ./repo_images/screen_01.png "Screen 1"
 [image2]: ./repo_images/screen_02.png "Screen 2"
